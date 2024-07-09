@@ -11,7 +11,7 @@ seeder = Seeder(42)
 # The ExperimentManager class is a compact way of experimenting with a deepRL agent.
 default_xp = ExperimentManager(
     StableBaselinesAgent,  # The Agent class.
-    (gym_make, dict(id="Acrobot-v1")),  # The Environment to solve.
+    (gym_make, dict(id="Ant-v2")),  # The Environment to solve.
     fit_budget=5e4,  # The number of interactions
     # between the agent and the
     # environment during training.
