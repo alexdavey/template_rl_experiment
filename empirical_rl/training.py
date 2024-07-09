@@ -7,12 +7,14 @@ from stable_baselines3 import PPO
 from avec_ppo import AVECPPO
 
 seeder = Seeder(42)
+env_id = "Ant-v2"
+fit_budget = 1e5
 
 # The ExperimentManager class is a compact way of experimenting with a deepRL agent.
 default_xp = ExperimentManager(
     StableBaselinesAgent,  # The Agent class.
-    (gym_make, dict(id="Ant-v2")),  # The Environment to solve.
-    fit_budget=5e4,  # The number of interactions
+    (gym_make, dict(id=env_id)),  # The Environment to solve.
+    fit_budget=fit_budget,  # The number of interactions
     # between the agent and the
     # environment during training.
     init_kwargs=dict(algo_cls=PPO),  # Init value for StableBaselinesAgent
@@ -30,8 +32,8 @@ default_xp = ExperimentManager(
 
 avec_xp = ExperimentManager(
     StableBaselinesAgent,  # The Agent class.
-    (gym_make, dict(id="Acrobot-v1")),  # The Environment to solve.
-    fit_budget=5e4,  # The number of interactions
+    (gym_make, dict(id=env_id)),  # The Environment to solve.
+    fit_budget=fit_budget,  # The number of interactions
     # between the agent and the
     # environment during training.
     init_kwargs=dict(algo_cls=AVECPPO),  # Init value for StableBaselinesAgent
