@@ -14,7 +14,7 @@ fit_budget = 1e6
 # Hyperparams from Table 3
 hyperparams = {
     "n_steps": 2048,
-    "lr": 2.5e-4,
+    "learning_rate": 2.5e-4,
     "n_epochs": 10,
     "batch_size": 32,
     "gamma": 0.99,
