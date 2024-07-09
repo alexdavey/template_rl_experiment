@@ -3,12 +3,25 @@ from rlberry.envs import gym_make
 from rlberry.agents.stable_baselines import StableBaselinesAgent
 from rlberry.seeding import Seeder
 
+import torch
 from stable_baselines3 import PPO
 from avec_ppo import AVECPPO
 
 seeder = Seeder(42)
 env_id = "Ant-v2"
-fit_budget = 1e5
+fit_budget = 1e6
+
+# Hyperparams from Table 3
+hyperparams = {
+    "n_steps": 2048,
+    "lr": 2.5e-4,
+    "n_epochs": 10,
+    "batch_size": 32,
+    "gamma": 0.99,
+    "policy_kwargs": {"activation_fn": torch.nn.Tanh, "net_arch": {"pi": [64]*2, "vf": [64]*2}},
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+}
 
 # The ExperimentManager class is a compact way of experimenting with a deepRL agent.
 default_xp = ExperimentManager(
@@ -17,7 +30,7 @@ default_xp = ExperimentManager(
     fit_budget=fit_budget,  # The number of interactions
     # between the agent and the
     # environment during training.
-    init_kwargs=dict(algo_cls=PPO),  # Init value for StableBaselinesAgent
+    init_kwargs={**{"algo_cls": PPO}, **hyperparams},  # Init value for StableBaselinesAgent
     eval_kwargs=dict(eval_horizon=500),  # The number of interactions
     # between the agent and the
     # environment during evaluations.
@@ -36,7 +49,7 @@ avec_xp = ExperimentManager(
     fit_budget=fit_budget,  # The number of interactions
     # between the agent and the
     # environment during training.
-    init_kwargs=dict(algo_cls=AVECPPO),  # Init value for StableBaselinesAgent
+    init_kwargs={**{"algo_cls": AVECPPO}, **hyperparams},  # Init value for StableBaselinesAgent
     eval_kwargs=dict(eval_horizon=500),  # The number of interactions
     # between the agent and the
     # environment during evaluations.
